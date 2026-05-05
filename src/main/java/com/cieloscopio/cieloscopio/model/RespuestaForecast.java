@@ -14,9 +14,14 @@ public record RespuestaForecast(
             @SerializedName("main") DatosPrincipales principales,
             @SerializedName("weather") List<DatosCondicion> condiciones,
             @SerializedName("pop") Double probabilidadPrecipitacion,
-            @SerializedName("rain") DatosLluvia lluvia
+            @SerializedName("rain") DatosLluvia lluvia,
+            @SerializedName("wind") DatosViento viento
             ) {
     }
+
+    public record DatosViento(
+            @SerializedName("speed") Double velocidad
+    ){}
 
     public record DatosCondicion(
             @SerializedName("description") String descripcion
@@ -33,7 +38,9 @@ public record RespuestaForecast(
             @SerializedName("temp") Double temperatura,
             @SerializedName("temp_max") Double temperaturaMaxima,
             @SerializedName("temp_min") Double temperaturaMinima,
-            @SerializedName("feels_like") Double sensacionTermica
+            @SerializedName("feels_like") Double sensacionTermica,
+            @SerializedName("pressure") Integer presion,
+            @SerializedName("humidity") Integer humedad
     ) {
     }
 }
