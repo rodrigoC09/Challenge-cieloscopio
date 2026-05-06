@@ -6,14 +6,18 @@ import com.cieloscopio.cieloscopio.exceptions.CiudadNoEncontradaException;
 import com.cieloscopio.cieloscopio.exceptions.ErrorConsultaApiException;
 import com.cieloscopio.cieloscopio.model.DatosGeograficos;
 import com.cieloscopio.cieloscopio.model.ModoReporte;
+import com.cieloscopio.cieloscopio.model.RegistroConsulta;
 import com.cieloscopio.cieloscopio.model.RespuestaForecast;
+import com.cieloscopio.cieloscopio.service.HistorialConsultas;
 
+import java.time.LocalDateTime;
 import java.util.Scanner;
 import java.util.concurrent.CompletableFuture;
 
 public class Principal {
     private final weathermapApi service = new weathermapApi();
     private final Scanner teclado = new Scanner(System.in);
+    private HistorialConsultas historial = new HistorialConsultas();
 
     public void menuCieloscopio() {
         boolean salir = false;
@@ -30,7 +34,8 @@ public class Principal {
 					5. Santiago
 					6. Quiero consultar otra cuidad
 					7. Pronostico para los 3 dias siguientes
-					8. Salir
+					8. Historial de búsqueda
+					9. Salir
 					""");
             String opcion =teclado.nextLine();
 
@@ -87,7 +92,20 @@ public class Principal {
                         }
                         }
                 }
-                case "8"-> {
+                case "8"->{
+                    var lista = historial.obtenerRegistros();
+                    if (lista.isEmpty()) {
+                        System.out.println("\n[!] El historial esta vacío");
+                    }else{
+                        System.out.println("\n/// CIUDADES CONSULTADAS RECIENTEMENTE ///");
+//                        for (int i =0; i< lista.size(); i++){
+//                            System.out.println((i+1)+". "+lista.get(i));
+//                        }
+                        lista.forEach(System.out::println);
+                        System.out.println("/////////////////////////////");
+                    }
+                }
+                case "9"-> {
                     System.out.println("Cerrando aplicacion");
                     salir = true;
 
@@ -326,6 +344,15 @@ public class Principal {
                 .thenCompose(geoJson -> procesarCoordenadas(geoJson, conversor))
                 .thenAccept(jsonForecast -> {
                     RespuestaForecast datos = conversor.obtenerDatos(jsonForecast, RespuestaForecast.class);
+
+                    //historial.agregarCiudad(datos.ciudad().nombre());
+
+                    RegistroConsulta nuevoRegistro = new RegistroConsulta(
+                        datos.ciudad().nombre(),
+                                LocalDateTime.now(),
+                                modo
+                    );
+                    historial.agregarRegistro(nuevoRegistro);
 
                     switch (modo) {
                         case Resumen_24H -> mostrarResumen24Horas(datos);

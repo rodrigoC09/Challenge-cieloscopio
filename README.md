@@ -9,6 +9,7 @@ Aplicación de consola desarrollada en **Spring Boot** para consultar el clima y
 - Búsqueda personalizada de ciudad deseada.
 - Pronostico de las próximas 24horas
 - Pronostico de 3 dias
+- Histórico de ciudades con fecha y hora de la consulta
 - Visualización de Estado(soleado, lluvioso, etc), Temperatura actual, Temperatura Mínima, Temperatura Máxima, Probabilidad de precipitaciones, Volumen o cantidad de lluvia, Sensación térmica, Humedad, Viento
 - Manejo de excepciones y errores tanto de API como Búsqueda.
 
