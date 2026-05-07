@@ -26,9 +26,7 @@ Aplicación de consola desarrollada en **Spring Boot** para consultar el clima y
 
 ## 🔑 Configuración
 
-Para el correcto funcionamiento de la aplicacion se debe crear una variable de entorno `API_KEY_weathermap` con la clave generada en tu cuenta de OpenWeather 
+Para el correcto funcionamiento de la aplicacion se debe crear una variable de entorno `API_KEY_weathermap` con la clave generada en tu cuenta de OpenWeather y ademas se creo otra variable de entorno `API_KEY_accuweather` para la api AccuWeather
 
-## 📋 Mejoras a Futuro
-- Implementación de cálculo matemático para Fase Lunar.
-
-- Integración de Índice UV mediante endpoints Pro.
+## 📋 Mejoras finales
+- Implementación de API AccuWeather para obtener la Fase Lunar y la integración de Índice UV 

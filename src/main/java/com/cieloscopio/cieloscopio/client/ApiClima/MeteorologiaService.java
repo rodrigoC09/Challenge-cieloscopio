@@ -11,22 +11,29 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
 
-public class weathermapApi {
+public class MeteorologiaService {
     private final String API_KEY;
     private final HttpClient httpClient;
+    private final String API_KEY_ACCU;
     //temperatura actual
 
-    //Url geolocalizacion
+    //Url geolocalizacion(OpenWeather)
     private static final String GEO_URL="http://api.openweathermap.org/geo/1.0/direct";
     //Url pronostico de 5 dias
     private static final String FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast";
 
+    //Url AccuWeather
+    private static final String ACCU_LOCATION_URL = "https://dataservice.accuweather.com/locations/v1/cities/search";
+    private static final String ACCU_FORECAST_URL = "https://dataservice.accuweather.com/forecasts/v1/daily/1day/";
 
 
-    public weathermapApi() {
+    public MeteorologiaService() {
         this.API_KEY = System.getenv("API_KEY_weathermap");
-        if (this.API_KEY == null || this.API_KEY.isBlank()) {
-            throw new IllegalStateException("ERROR: La variable de entorno 'API_KEY_weathermap' no fue configurada en IntelliJ.");
+        this.API_KEY_ACCU = System.getenv("API_KEY_accuweather");
+        //this.API_KEY_ACCU = "zpka_a281a4e8f71e4c02bb84dd7332578ba1_081fe3f0";
+
+        if (this.API_KEY == null || this.API_KEY_ACCU ==null) {
+            throw new IllegalStateException("ERROR: La variable de entorno 'API_KEY_weathermap' no fue configurada o La variable de entorno 'API_KEY_AccuWeather' no fue configurada en IntelliJ.");
         }
         this.httpClient = HttpClient.newBuilder()
                 .connectTimeout(Duration.ofSeconds(10))
@@ -76,5 +83,24 @@ public class weathermapApi {
                     return response.body();
                 });
     }
+
+    //Metodos ACCUWEATHER
+
+    public CompletableFuture<String> obtenerLocationKey(String ciudad) {
+        String ciudadCodificada = URLEncoder.encode(ciudad, StandardCharsets.UTF_8);
+
+        String url = String.format("%s?apikey=%s&q=%s&language=es-es",
+                ACCU_LOCATION_URL, API_KEY_ACCU, ciudadCodificada);
+        return ejecutarRequest(url);
+    }
+
+    public CompletableFuture<String> obtenerDetalleAccu(String locationKey) {
+        String url = String.format("%s%s?apikey=%s&details=true&language=es-es",
+                ACCU_FORECAST_URL, locationKey, API_KEY_ACCU);
+        return ejecutarRequest(url);
+    }
+
+
+
 
 }

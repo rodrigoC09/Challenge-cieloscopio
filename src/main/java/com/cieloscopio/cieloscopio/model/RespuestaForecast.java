@@ -34,6 +34,29 @@ public record RespuestaForecast(
             @SerializedName("name") String nombre
     ) {
     }
+    public record AccuLocation(
+      @SerializedName("Key") String llave,
+      @SerializedName("LocalizedName") String nombre
+    ){}
+    public record AccuForecast(
+            @SerializedName("DailyForecasts") List<DailyForecast> pronosticos
+    ) {}
+
+    public record DailyForecast(
+            @SerializedName("AirAndPollen") List<AirQuality> aire,
+            @SerializedName("Moon") MoonPhase luna
+    ) {}
+
+    public record AirQuality(
+            @SerializedName("Name") String nombre,
+            @SerializedName("Value") Integer valor,
+            @SerializedName("Category") String categoria
+    ) {}
+
+    public record MoonPhase(
+            @SerializedName("Phase") String nombreFase,
+            @SerializedName("Age") Integer edad // Días del ciclo lunar
+    ) {}
     public record DatosPrincipales(
             @SerializedName("temp") Double temperatura,
             @SerializedName("temp_max") Double temperaturaMaxima,
