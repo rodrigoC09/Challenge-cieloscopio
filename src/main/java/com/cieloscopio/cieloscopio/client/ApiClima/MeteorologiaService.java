@@ -25,12 +25,10 @@ public class MeteorologiaService {
     //Url AccuWeather
     private static final String ACCU_LOCATION_URL = "https://dataservice.accuweather.com/locations/v1/cities/search";
     private static final String ACCU_FORECAST_URL = "https://dataservice.accuweather.com/forecasts/v1/daily/1day/";
-
-
+    //eliminacion de clave secreta
     public MeteorologiaService() {
         this.API_KEY = System.getenv("API_KEY_weathermap");
         this.API_KEY_ACCU = System.getenv("API_KEY_accuweather");
-
 
         if (this.API_KEY == null || this.API_KEY_ACCU ==null) {
             throw new IllegalStateException("ERROR: La variable de entorno 'API_KEY_weathermap' no fue configurada o La variable de entorno 'API_KEY_AccuWeather' no fue configurada en IntelliJ.");
