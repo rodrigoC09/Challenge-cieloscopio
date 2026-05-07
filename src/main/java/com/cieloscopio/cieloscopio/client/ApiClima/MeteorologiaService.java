@@ -30,7 +30,7 @@ public class MeteorologiaService {
     public MeteorologiaService() {
         this.API_KEY = System.getenv("API_KEY_weathermap");
         this.API_KEY_ACCU = System.getenv("API_KEY_accuweather");
-        //this.API_KEY_ACCU = "zpka_a281a4e8f71e4c02bb84dd7332578ba1_081fe3f0";
+
 
         if (this.API_KEY == null || this.API_KEY_ACCU ==null) {
             throw new IllegalStateException("ERROR: La variable de entorno 'API_KEY_weathermap' no fue configurada o La variable de entorno 'API_KEY_AccuWeather' no fue configurada en IntelliJ.");
